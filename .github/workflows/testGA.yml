@@ -1,7 +1,6 @@
-name: Deploy to Github pages
+name: Deploy to Github page test
 
 on:
-  #Trigger the workflow every time push to main branch
   push:
     branches: [main]
   workflow_dispatch:
@@ -18,23 +17,20 @@ jobs:
       - name: Checkout repository using git
         uses: actions/checkout@v4
 
-      - name: Install, build, and upload site
+      - name: Install, build and upload site
         uses: withastro/action@v3
         with:
           path: .
           node-version: 20
-          package-manager: pnpm@latest
+          package-manager: pnpm@9.12.3
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url}}
     steps:
-      - name: Deploy to github
+      - name: Deploy to Github
         id: deployment
         uses: actions/deploy-pages@v4
-
-
-
